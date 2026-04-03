@@ -1,34 +1,52 @@
-using Microsoft.AspNetCore.Identity; // Manejo de usuarios (login, registro)
-using Microsoft.EntityFrameworkCore; // Entity Framework
-using TiendaOnline.Data; // Tu DbContext
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using TiendaOnline.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔗 Obtener cadena de conexión desde appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("No se encontró la cadena de conexión.");
-
-// 🗄️ Configurar conexión a SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// 🔧 Página de errores para base de datos (solo desarrollo)
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// 🔐 Configurar sistema de login (Identity)
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-    options.SignIn.RequireConfirmedAccount = false)
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 12; 
+    options.Password.RequiredUniqueChars = 4;
+
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    options.User.RequireUniqueEmail = true;
+})
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// 🎯 Agregar soporte para MVC (controladores + vistas)
+builder.Services.ConfigureApplicationCookie(Options =>
+{
+    Options.Cookie.HttpOnly = true;
+    Options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    Options.Cookie.SameSite = SameSiteMode.Lax;
+    Options.SlidingExpiration = true;
+    Options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+
+    Options.LoginPath = "/Identity/Account/Login";
+    Options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// ⚙️ Configuración según entorno
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint(); // Permite usar migraciones en desarrollo
+    app.UseMigrationsEndPoint();
 }
 else
 {
@@ -36,17 +54,17 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection(); // Forzar HTTPS
-app.UseRouting(); // Activar rutas
+app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Activar login
-app.UseAuthorization(); // Activar permisos
+app.UseRouting();
 
-// 🛣️ Ruta principal
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllerRoute(
-    name: "default",
+    name: "deafault",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); // Necesario para Identity
+app.MapRazorPages();
 
-app.Run(); // Ejecuta la app
+app.Run(); 
