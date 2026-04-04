@@ -1,8 +1,110 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
+}
+@model TiendaOnline.Models.HomeViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+
+<main class="home">
+    <section class="home__hero">
+        <div class="container">
+            <div class="home__hero-content">
+                <div class="home__hero-text">
+                    <span class="home__badge">Tienda tecnológica</span>
+
+                    <h1 class="home__title">
+                        Compra y vende tecnología con estilo
+                    </h1>
+
+                    <p class="home__description">
+                        Una plataforma moderna para mostrar productos, categorías y promociones
+                        con una imagen sólida, profesional y preparada para crecer.
+                    </p>
+
+                    <div class="home__actions">
+                        <a href="#" class="btn btn--primary">Ver productos</a>
+                        <a href="#" class="btn btn--secondary">Explorar categorías</a>
+                    </div>
+                </div>
+
+                <div class="home__hero-visual">
+                    <div class="home__hero-card">
+                        @if (Model.UltimosProductos != null && Model.UltimosProductos.Any())
+                        {
+                            <div id="homeHeroCarousel" class="carousel slide home-carousel" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    @for (int i = 0; i < Model.UltimosProductos.Count; i++)
+                                    {
+                                        <button type="button"
+                                                data-bs-target="#homeHeroCarousel"
+                                                data-bs-slide-to="@i"
+                                                class="@(i == 0 ? "active" : "")"
+                                                aria-current="@(i == 0 ? "true" : "false")"
+                                                aria-label="Producto @(i + 1)">
+                                        </button>
+                                    }
+                                </div>
+
+                                <div class="carousel-inner">
+                                    @for (int i = 0; i < Model.UltimosProductos.Count; i++)
+                                    {
+                                        var producto = Model.UltimosProductos[i];
+
+                                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                                            <div class="home-carousel__item">
+                                                <img src="@producto.ImagenUrl"
+                                                     alt="@producto.Nombre"
+                                                     class="home-carousel__image" />
+
+                                                <div class="home-carousel__caption">
+                                                    <span class="home-carousel__tag">Nuevo</span>
+                                                    <h3>@producto.Nombre</h3>
+                                                    <p>@producto.Descripcion</p>
+                                                    <span class="home-carousel__price">CLP $@producto.Precio.ToString("N0")</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <button class="carousel-control-prev" type="button" data-bs-target="#homeHeroCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+
+                                <button class="carousel-control-next" type="button" data-bs-target="#homeHeroCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="home-carousel__empty">
+                                <p>No hay productos disponibles todavía.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var carousel = document.getElementById('homeHeroCarousel');
+            if (carousel) {
+                new bootstrap.Carousel(carousel, {
+                    interval: 3000,
+                    ride: 'carousel'
+                });
+            }
+        });
+    </script>
+}

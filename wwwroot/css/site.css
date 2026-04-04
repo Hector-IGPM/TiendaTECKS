@@ -1,31 +1,208 @@
-html {
-  font-size: 14px;
+:root {
+    --color-primary-dark: #034159;
+    --color-secondary-dark: #025951;
+    --color-accent: #02735E;
+    --color-accent-strong: #038C3E;
+    --color-highlight: #0CF25D;
+    --color-white: #ffffff;
+    --color-text: #e8f3f1;
+    --color-text-soft: rgba(232, 243, 241, 0.72);
+    --color-border: rgba(255, 255, 255, 0.10);
+    --color-surface: rgba(255, 255, 255, 0.05);
+    --color-shadow: rgba(0, 0, 0, 0.22);
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --transition-base: all 0.25s ease;
 }
 
-@media (min-width: 768px) {
-  html {
+html {
     font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.app-body {
+    background: radial-gradient(circle at top left, rgba(12, 242, 93, 0.08), transparent 25%), linear-gradient(180deg, #012f40 0%, #034159 100%);
+    color: var(--color-white);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* HEADER / NAVBAR */
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    backdrop-filter: blur(10px);
+}
+
+.app-navbar {
+    background: rgba(3, 65, 89, 0.86);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 10px 30px var(--color-shadow);
+    padding: 0.95rem 0;
+}
+
+    .app-navbar .container {
+        display: flex;
+        align-items: center;
+    }
+
+.app-navbar__brand {
+    color: var(--color-white) !important;
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+    .app-navbar__brand:hover {
+        color: var(--color-highlight) !important;
+    }
+
+.app-navbar__menu {
+    gap: 0.4rem;
+    margin-left: 2rem;
+}
+
+.app-navbar__link {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 600;
+    padding: 0.7rem 1rem !important;
+    border-radius: 10px;
+    transition: var(--transition-base);
+}
+
+    .app-navbar__link:hover,
+    .app-navbar__link:focus {
+        color: var(--color-white) !important;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+.app-navbar__toggler {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+    .app-navbar__toggler .navbar-toggler-icon {
+        filter: invert(1);
+    }
+
+/* LOGIN PARTIAL */
+.app-navbar__actions {
+    display: flex;
+    align-items: center;
+}
+
+    /* si _LoginPartial usa ul.navbar-nav */
+    .app-navbar__actions .navbar-nav {
+        gap: 0.7rem;
+        align-items: center;
+    }
+
+    /* links del login */
+    .app-navbar__actions .nav-link {
+        color: rgba(255, 255, 255, 0.92) !important;
+        font-weight: 600;
+        padding: 0.65rem 1rem !important;
+        border-radius: 10px;
+        transition: var(--transition-base);
+    }
+
+        .app-navbar__actions .nav-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--color-white) !important;
+        }
+
+    /* botón register */
+    .app-navbar__actions a[href*="Register"] {
+        background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+        color: var(--color-white) !important;
+        box-shadow: 0 8px 18px rgba(3, 140, 62, 0.25);
+    }
+
+        .app-navbar__actions a[href*="Register"]:hover {
+            background: linear-gradient(135deg, var(--color-accent-strong), var(--color-highlight));
+            transform: translateY(-1px);
+        }
+
+/* CONTENIDO */
+.app-shell {
+    min-height: calc(100vh - 150px);
+}
+
+.app-main {
+    padding: 0;
+}
+
+/* FOOTER */
+.app-footer {
+    border-top: 1px solid var(--color-border);
+    background: rgba(1, 43, 58, 0.75);
+    margin-top: 2rem;
+}
+
+.app-footer__content {
+    min-height: 78px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: var(--color-text-soft);
+}
+
+.app-footer__text {
+    margin-left: 0.5rem;
+}
+
+.app-footer__links {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+    .app-footer__links a {
+        color: var(--color-text);
+        text-decoration: none;
+        transition: var(--transition-base);
+    }
+
+        .app-footer__links a:hover {
+            color: var(--color-highlight);
+        }
+
+/* Bootstrap fixes */
+.container {
+    max-width: 1320px;
+}
+
+a {
+    transition: var(--transition-base);
+}
+
+.btn:focus,
+.navbar-toggler:focus,
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(12, 242, 93, 0.18) !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 991.98px) {
+    .app-navbar__menu {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+
+    .app-navbar__actions {
+        margin-top: 1rem;
+    }
+
+    .app-footer__content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }

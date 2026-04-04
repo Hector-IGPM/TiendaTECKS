@@ -5,7 +5,6 @@ namespace TiendaOnline.Models.Entidades
 {
     public class Producto
     {
-
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El nombre del producto es obligatorio")]
@@ -20,14 +19,15 @@ namespace TiendaOnline.Models.Entidades
         public decimal Precio { get; set; }
 
         [Required]
-        public string? ImagenUrl { get; set; }
+        public string ImagenUrl { get; set; } = string.Empty;
 
-        public  bool Activo { get; set; } = true;
+        public bool Activo { get; set; } = true;
 
         [Required]
         public int CategoriaId { get; set; }
 
-        public Categoria? Categoria { get; set; }
+        public int? Stock { get; set; }
 
+        public Categoria? Categoria { get; set; }
     }
 }

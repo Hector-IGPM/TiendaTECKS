@@ -1,0 +1,203 @@
+﻿:root {
+    --color-primary-dark: #034159;
+    --color-secondary-dark: #025951;
+    --color-accent: #02735E;
+    --color-accent-strong: #038C3E;
+    --color-highlight: #0CF25D;
+    --color-white: #ffffff;
+    --color-text-light: rgba(255, 255, 255, 0.88);
+    --color-text-soft: rgba(255, 255, 255, 0.68);
+    --color-surface: rgba(255, 255, 255, 0.08);
+    --color-border: rgba(255, 255, 255, 0.14);
+    --color-shadow: rgba(0, 0, 0, 0.28);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 12px;
+    --transition-base: all 0.25s ease;
+}
+
+/* ===================== */
+/* GENERAL */
+/* ===================== */
+
+.home {
+    background: radial-gradient(circle at top left, rgba(12, 242, 93, 0.08), transparent 30%), linear-gradient(180deg, #012b3a 0%, #023047 100%);
+    min-height: 100vh;
+    padding: 2rem 0 4rem;
+}
+
+/* ===================== */
+/* HERO */
+/* ===================== */
+
+.home__hero {
+    padding: 2rem 0;
+}
+
+.home__hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 3rem;
+    min-height: 70vh;
+    background: linear-gradient(135deg, rgba(3, 65, 89, 0.96), rgba(2, 89, 81, 0.92));
+    border-radius: 28px;
+    padding: 3.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 60px var(--color-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+    .home__hero-content::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 15% 20%, rgba(12, 242, 93, 0.10), transparent 22%), radial-gradient(circle at 85% 80%, rgba(3, 140, 62, 0.16), transparent 28%);
+    }
+
+/* ===================== */
+/* TEXTO */
+/* ===================== */
+
+.home__hero-text {
+    z-index: 1;
+}
+
+.home__badge {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.1);
+    color: var(--color-white);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+}
+
+.home__title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.home__description {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    max-width: 500px;
+    margin-bottom: 2rem;
+}
+
+/* ===================== */
+/* BOTONES */
+/* ===================== */
+
+.home__actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.9rem 1.5rem;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transition-base);
+}
+
+.btn--primary {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+    color: white;
+}
+
+    .btn--primary:hover {
+        transform: translateY(-2px);
+    }
+
+.btn--secondary {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+}
+
+    .btn--secondary:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+/* ===================== */
+/* IMAGEN / CARD */
+/* ===================== */
+
+.home__hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* 🔥 CARD PRO */
+.home__hero-card {
+    width: 100%;
+    max-width: 420px;
+    height: 480px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--color-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+}
+
+/* 🔥 FIX REAL DEL PROBLEMA */
+.home__hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 🔥 clave */
+    background-color: #0f172a;
+}
+
+/* ===================== */
+/* RESPONSIVE */
+/* ===================== */
+
+@media (max-width: 991px) {
+
+    .home__hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .home__hero-text {
+        align-items: center;
+    }
+
+    .home__description {
+        margin: 0 auto 2rem;
+    }
+
+    .home__actions {
+        justify-content: center;
+    }
+
+    .home__hero-card {
+        height: 400px;
+    }
+}
+
+@media (max-width: 575px) {
+
+    .home__hero-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .home__title {
+        font-size: 2rem;
+    }
+
+    .home__hero-card {
+        height: 350px;
+    }
+}
