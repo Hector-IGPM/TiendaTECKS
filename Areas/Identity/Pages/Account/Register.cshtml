@@ -1,0 +1,268 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Crear cuenta";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center align-items-start">
+        <div class="col-lg-7 col-xl-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h1 class="fw-bold mb-2">Crear una cuenta</h1>
+                        <p class="text-muted mb-0">
+                            Completa tus datos para registrarte en la tienda.
+                        </p>
+                    </div>
+
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Nombres" class="form-label fw-semibold"></label>
+                                <input asp-for="Input.Nombres"
+                                       class="form-control form-control-lg rounded-3"
+                                       placeholder="Ej: Héctor Andrés" />
+                                <span asp-validation-for="Input.Nombres" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Apellidos" class="form-label fw-semibold"></label>
+                                <input asp-for="Input.Apellidos"
+                                       class="form-control form-control-lg rounded-3"
+                                       placeholder="Ej: Salas Acosta" />
+                                <span asp-validation-for="Input.Apellidos" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Email" class="form-label fw-semibold"></label>
+                            <input asp-for="Input.Email" class="form-control form-control-lg rounded-3" autocomplete="username" placeholder="correo@ejemplo.com" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.TelefonoContacto" class="form-label fw-semibold"></label>
+
+                            <div class="input-group input-group-lg">
+                                <select id="prefijoTelefono" class="form-select" style="max-width: 160px;">
+                                    <option value="+56" selected>🇨🇱 +56</option>
+                                    <option value="+54">🇦🇷 +54</option>
+                                    <option value="+51">🇵🇪 +51</option>
+                                    <option value="+52">🇲🇽 +52</option>
+                                    <option value="+57">🇨🇴 +57</option>
+                                    <option value="+58">🇻🇪 +58</option>
+                                    <option value="+55">🇧🇷 +55</option>
+                                    <option value="+34">🇪🇸 +34</option>
+                                    <option value="+1">🇺🇸 / 🇨🇦 +1</option>
+                                </select>
+
+                                <input asp-for="Input.TelefonoContacto"
+                                       id="telefonoInput"
+                                       class="form-control rounded-end-3"
+                                       placeholder="9 1234 5678" />
+                            </div>
+
+                            <span asp-validation-for="Input.TelefonoContacto" class="text-danger"></span>
+                            <div class="form-text">Campo opcional. Selecciona el prefijo e ingresa el número.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Direccion" class="form-label fw-semibold"></label>
+                            <input asp-for="Input.Direccion" class="form-control form-control-lg rounded-3" placeholder="Ej: Módulo ZOFRI, Iquique" />
+                            <span asp-validation-for="Input.Direccion" class="text-danger"></span>
+                            <div class="form-text">Campo opcional.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Password" class="form-label fw-semibold"></label>
+
+                            <div class="input-group input-group-lg">
+                                <input asp-for="Input.Password"
+                                       id="passwordInput"
+                                       class="form-control rounded-start-3"
+                                       autocomplete="new-password"
+                                       placeholder="Ingresa tu contraseña" />
+
+                                <button class="btn btn-outline-secondary"
+                                        type="button"
+                                        id="togglePassword"
+                                        tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                            <div class="mt-3 small">
+                                <div class="fw-semibold mb-2">La contraseña debe contener:</div>
+                                <ul class="mb-0 ps-3" id="passwordRules">
+                                    <li id="ruleLength" class="text-muted">Mínimo 12 caracteres</li>
+                                    <li id="ruleUpper" class="text-muted">Al menos una letra mayúscula</li>
+                                    <li id="ruleLower" class="text-muted">Al menos una letra minúscula</li>
+                                    <li id="ruleNumber" class="text-muted">Al menos un número</li>
+                                    <li id="ruleSpecial" class="text-muted">Al menos un símbolo</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Input.ConfirmPassword" class="form-label fw-semibold"></label>
+
+                            <div class="input-group input-group-lg">
+                                <input asp-for="Input.ConfirmPassword"
+                                       id="confirmPasswordInput"
+                                       class="form-control rounded-start-3"
+                                       autocomplete="new-password"
+                                       placeholder="Repite tu contraseña" />
+
+                                <button class="btn btn-outline-secondary"
+                                        type="button"
+                                        id="toggleConfirmPassword"
+                                        tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button id="registerSubmit" type="submit" class="btn btn-primary btn-lg w-100 rounded-3 fw-semibold">
+                            Crear cuenta
+                        </button>
+
+                        <div class="text-center mt-4">
+                            <p class="mb-0">
+                                ¿Ya tienes cuenta?
+                                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="fw-semibold text-decoration-none">
+                                    Inicia sesión aquí
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 col-xl-4 mt-4 mt-lg-0">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h3 class="fw-bold mb-3">Seguridad de tu cuenta</h3>
+                    <p class="text-muted mb-3">
+                        Protegemos tu acceso con una contraseña robusta y validaciones seguras.
+                    </p>
+
+                    <div class="mb-2">
+                        <span class="badge bg-success-subtle text-dark border">Correo validado</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="badge bg-success-subtle text-dark border">Contraseña segura</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="badge bg-success-subtle text-dark border">Datos personales protegidos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const passwordInput = document.getElementById("passwordInput");
+            const confirmPasswordInput = document.getElementById("confirmPasswordInput");
+            const togglePassword = document.getElementById("togglePassword");
+            const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+
+            const ruleLength = document.getElementById("ruleLength");
+            const ruleUpper = document.getElementById("ruleUpper");
+            const ruleLower = document.getElementById("ruleLower");
+            const ruleNumber = document.getElementById("ruleNumber");
+            const ruleSpecial = document.getElementById("ruleSpecial");
+
+            const prefijoTelefono = document.getElementById("prefijoTelefono");
+            const telefonoInput = document.getElementById("telefonoInput");
+
+            function toggleVisibility(input, button) {
+                const icon = button.querySelector("i");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove("bi-eye");
+                    icon.classList.add("bi-eye-slash");
+                } else {
+                    input.type = "password";
+                    icon.classList.remove("bi-eye-slash");
+                    icon.classList.add("bi-eye");
+                }
+            }
+
+            togglePassword.addEventListener("click", function () {
+                toggleVisibility(passwordInput, togglePassword);
+            });
+
+            toggleConfirmPassword.addEventListener("click", function () {
+                toggleVisibility(confirmPasswordInput, toggleConfirmPassword);
+            });
+
+            function updateRule(element, isValid) {
+                element.classList.remove("text-muted", "text-success", "text-danger");
+
+                if (isValid) {
+                    element.classList.add("text-success");
+                } else {
+                    element.classList.add("text-muted");
+                }
+            }
+
+            function validatePasswordRules() {
+                const value = passwordInput.value;
+
+                const hasLength = value.length >= 12;
+                const hasUpper = /[A-Z]/.test(value);
+                const hasLower = /[a-z]/.test(value);
+                const hasNumber = /\d/.test(value);
+                const hasSpecial = /[^a-zA-Z0-9]/.test(value);
+
+                updateRule(ruleLength, hasLength);
+                updateRule(ruleUpper, hasUpper);
+                updateRule(ruleLower, hasLower);
+                updateRule(ruleNumber, hasNumber);
+                updateRule(ruleSpecial, hasSpecial);
+            }
+
+            passwordInput.addEventListener("input", validatePasswordRules);
+
+            function updatePhoneWithPrefix() {
+                let numero = telefonoInput.value.trim();
+
+                const prefijos = ["+56", "+54", "+51", "+52", "+57", "+58", "+55", "+34", "+1"];
+                for (const p of prefijos) {
+                    if (numero.startsWith(p)) {
+                        numero = numero.substring(p.length).trim();
+                        break;
+                    }
+                }
+
+                if (numero.length > 0) {
+                    telefonoInput.value = `${prefijoTelefono.value} ${numero}`;
+                }
+            }
+
+            prefijoTelefono.addEventListener("change", updatePhoneWithPrefix);
+
+            telefonoInput.addEventListener("focus", function () {
+                if (telefonoInput.value.trim() === "") {
+                    telefonoInput.value = prefijoTelefono.value + " ";
+                }
+            });
+
+            validatePasswordRules();
+        });
+    </script>
+}

@@ -489,3 +489,118 @@ a {
         .menu-usuario a:hover {
             background-color: #0d6efd;
         }
+
+/* =========================
+   LOGIN PROFESIONAL CENTRADO
+========================= */
+
+.login-page {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 15px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 1050px;
+    background: #ffffff;
+    border-radius: 22px;
+    overflow: hidden;
+    border: none;
+}
+
+.login-header {
+    padding: 35px 35px 15px 35px;
+    background: #ffffff;
+}
+
+.login-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0b2239;
+    margin-bottom: 8px;
+}
+
+.login-subtitle {
+    color: #6c757d;
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+.login-form-section {
+    padding: 30px 35px 40px 35px;
+    background: #ffffff;
+}
+
+.login-side-section {
+    background: linear-gradient(135deg, #0b5c75, #0a3f52);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 30px;
+}
+
+.login-side-content {
+    max-width: 320px;
+    text-align: center;
+}
+
+.login-input {
+    height: 58px;
+    border-radius: 14px;
+    border: 1px solid #dbe3ea;
+    box-shadow: none;
+}
+
+    .login-input:focus {
+        border-color: #0b5c75;
+        box-shadow: 0 0 0 0.2rem rgba(11, 92, 117, 0.15);
+    }
+
+.login-btn {
+    height: 52px;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    background-color: #0b5c75;
+    border-color: #0b5c75;
+    transition: 0.3s ease;
+}
+
+    .login-btn:hover {
+        background-color: #09495d;
+        border-color: #09495d;
+    }
+
+.login-links a {
+    color: #0b5c75;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+    .login-links a:hover {
+        text-decoration: underline;
+    }
+
+.form-floating > label {
+    color: #6c757d;
+}
+
+@media (max-width: 991.98px) {
+    .login-card {
+        max-width: 600px;
+    }
+
+    .login-side-section {
+        padding: 30px 20px;
+    }
+
+    .login-form-section,
+    .login-header {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

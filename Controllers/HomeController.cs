@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
@@ -9,10 +10,15 @@ namespace TiendaOnline.Controllers
     public class HomeController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public HomeController(IConfiguration configuration)
+        // ✅ CONSTRUCTOR CORREGIDO (AQUÍ ESTABA EL ERROR)
+        public HomeController(
+            IConfiguration configuration,
+            SignInManager<ApplicationUser> signInManager)
         {
             _configuration = configuration;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -72,10 +78,21 @@ namespace TiendaOnline.Controllers
             return View();
         }
 
+        // ✅ LOGOUT FUNCIONANDO
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
-}
+}   
